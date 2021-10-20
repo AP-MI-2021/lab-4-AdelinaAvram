@@ -82,19 +82,49 @@ def lista_palindroame (l1, l2):
         s = int(s)
         if palindrom(s):
             l.append(s)
-    return s
+    return l
 
-        
+def test_lista_palindroame ():
+    assert lista_palindroame ([12, 22, 36, 11], [21, 23, 63, 55, 424]) == [1221, 3663]
+
+def inlocuire_cu_oglindit (l, div):
+    '''
+    determina lista obtinuta prin inlocuirea elementelor divizibile cu elementele listei div cu oglinditul lor
+    :param l: lista de nr intregi
+    :param div: lista de nr intregi
+    :return: lista obtinuta prin inlocuirea elementelor divizibile cu elementele listei div cu oglinditul lor
+    '''
+    for i in range (len(l)):
+        x = l[i]
+        ok = 1
+        for j in range (len(div)):
+            if x%div[j]!=0:
+                ok = 0
+        if ok == 1:
+            oglindit = (str(x))[::-1]
+            x = oglindit
+            x = int(x)
+            l[i] = x
+    return l
+
+def test_inlocuire_cu_oglindit ():
+    assert inlocuire_cu_oglindit ([12, 22, 36, 363], [1, 2, 3, 4]) == [21, 22, 63, 363]
+    assert inlocuire_cu_oglindit ([22, 23, 36, 55, 363], [1, 2, 3, 4]) == [22, 23, 63, 55, 363]
+
 def printMenu():
     print ("1. Citirea a 2 liste de nr intregi")
     print ("2. Verifica daca cele 2 liste citite au acelasi numar de elemente pare")
     print ("3. Determina intersectia celor doua liste")
     print ("4. Determina lista palindroamelor obtinute prin concatenarea elementelor de pe aceleasi pozitii in cele doua liste ")
+    print ("5. Afiseaza listele l1 si l2 in care elementele divizibile cu toate elementele din lista l3 sunt inlocuite cu oglinditul lor")
+    print ("x. Iesire")
 
 def main():
     test_nr_elem_pare()
     test_intersectie()
     test_palindrom()
+    test_lista_palindroame()
+    test_inlocuire_cu_oglindit()
     l1 = []
     l2 = []
     while True:
@@ -114,5 +144,17 @@ def main():
                 print ("NU")
         elif optiune == "3":
             print (intersectie(l1, l2))
-
+        elif optiune == "4":
+            print (lista_palindroame(l1, l2))
+        elif optiune == "5":
+            l3 = citireLista()
+            l1 = inlocuire_cu_oglindit (l1, l3)
+            l2 = inlocuire_cu_oglindit (l2, l3)
+            print (l1)
+            print (l2)
+        elif optiune == "x":
+            break
+        else:
+            print ("Optiune gresita. Reincercati!")
+            
 main()
